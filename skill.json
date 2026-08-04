@@ -1,0 +1,29 @@
+{
+  "name": "persistent-task-memory",
+  "version": "1.1.0",
+  "author": "Hermes Agent",
+  "description": "Provides every cron task with persistent memory, instructions, and controlled self-improvement",
+  "capabilities": [
+    "workspace",
+    "memory",
+    "reflection",
+    "versioning",
+    "change-tracking",
+    "proposal-system",
+    "locking",
+    "size-management",
+    "dry-run",
+    "git-integration",
+    "skill-inheritance"
+  ],
+  "files": {
+    "skill": "skill.py",
+    "templates": "templates/",
+    "scripts": "scripts/"
+  },
+  "metadata": {
+    "created": "2026-08-05",
+    "license": "MIT",
+    "tags": ["cron", "workspace", "memory", "versioning", "persistent", "locking", "git"]
+  }
+}
