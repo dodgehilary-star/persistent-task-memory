@@ -1,0 +1,49 @@
+name: Python CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+
+    - name: Run syntax checks
+      run: |
+        python -m py_compile skill.py
+        for script in scripts/*.py; do
+          python -m py_compile "$script"
+        done
+
+    - name: Validate templates
+      run: |
+        for template in templates/*.md; do
+          if ! grep -q "^#" "$template"; then
+            echo "Error: $template missing title"
+            exit 1
+          fi
+        done
+
+    - name: Check file sizes
+      run: |
+        max_size=50000
+        for file in skill.py scripts/*.py; do
+          size=$(wc -c < "$file")
+          if [ "$size" -gt "$max_size" ]; then
+            echo "Warning: $file exceeds $max_size bytes ($size bytes)"
+          fi
+        done
